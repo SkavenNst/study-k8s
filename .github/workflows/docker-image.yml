@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: docker-hub-login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_KEY: ${{secrets.DOCKER_KEY}}
+      run: docker login -u $DOCKER_USER -p $DOCKER_KEY
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/simple-python-server:$(date +%s)
+    - name: Push docker image
+      run: docker push ${{secrets.DOCKER_USER}}/simple-python-server:$(date +%s)
