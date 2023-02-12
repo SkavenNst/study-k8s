@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name:
+    python-simple-pod
+  labels:
+    component: app
+spec:
+  containers:
+    - name: web-server
+      image: skavenns/simple-python-server
+      ports:
+        - containerPort: 8080
+
