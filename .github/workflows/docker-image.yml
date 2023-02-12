@@ -20,6 +20,6 @@ jobs:
         password: ${{ secrets.DOCKER_KEY }}
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag skavenns/simple-python-server:$(date +%s)
+      run: docker build . --file Dockerfile --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
     - name: Push docker image
-      run: docker push skavenns/simple-python-server:$(date +%s)
+      run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
